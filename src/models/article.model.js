@@ -11,7 +11,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 
-const articleModel = sequelize.define(
+export const articleModel = sequelize.define(
     'article',{
         title:{
             type:DataTypes.STRING(200),

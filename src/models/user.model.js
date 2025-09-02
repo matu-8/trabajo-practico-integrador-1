@@ -10,8 +10,9 @@
 
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import { ProfileModel } from "./profile.model.js";
 
-const UserModel = sequelize.define(
+export const UserModel = sequelize.define(
     'user',{
         username:{
             type:DataTypes.STRING(20),
@@ -33,3 +34,9 @@ const UserModel = sequelize.define(
         }
     }
 )
+
+UserModel.hasOne(ProfileModel, {
+    foreignKey:"user_id",
+    as:"user"
+});
+ProfileModel.belongsTo(UserModel)
