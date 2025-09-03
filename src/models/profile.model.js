@@ -31,5 +31,6 @@ export const ProfileModel = sequelize.define(
         birth_date:{
             type:DataTypes.DATE
         },
-    }
-)
+    })
+
+    

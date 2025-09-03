@@ -10,6 +10,7 @@
 
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import { UserModel } from "./user.model.js";
 
 export const articleModel = sequelize.define(
     'article',{
@@ -18,7 +19,7 @@ export const articleModel = sequelize.define(
             allowNull:false
         },
         content:{
-            type:DataTypes.TEXT(100),
+            type:DataTypes.TEXT,
             allowNull:false
         },
         excerpt:{
@@ -28,5 +29,14 @@ export const articleModel = sequelize.define(
             type:DataTypes.ENUM('published','archived'),
             defaultValue:'published'
         }
-    }
-)
+    });
+    
+//relacion 1:M
+UserModel.hasMany(articleModel,{
+    foreignKey:"article_id",
+    as:"author"
+    })
+articleModel.belongsTo(UserModel,{
+    foreignKey:"article_id",
+    as:"article"
+    })

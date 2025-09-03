@@ -6,6 +6,8 @@
 
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import { articleModel } from "./article.model.js";
+import { articleTag } from "./articleTag.model.js";
 
 export const tagModel = sequelize.define(
     'tag',{
@@ -13,5 +15,9 @@ export const tagModel = sequelize.define(
             type:DataTypes.STRING(30),
             unique:true
         },
-    }
-)
+    });
+//relacion N:M
+articleModel.belongsToMany(tagModel, 
+    {through: articleTag})
+tagModel.belongsToMany(articleModel,
+    {through: articleTag})
