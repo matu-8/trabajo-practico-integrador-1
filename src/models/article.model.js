@@ -32,11 +32,12 @@ export const articleModel = sequelize.define(
     });
     
 //relacion 1:M
+
 UserModel.hasMany(articleModel,{
-    foreignKey:"article_id",
-    as:"author"
+    foreignKey:"user_id",
+    as:"articles"
     })
 articleModel.belongsTo(UserModel,{
-    foreignKey:"article_id",
-    as:"article"
+    foreignKey:"user_id",
+    as:"author"
     })

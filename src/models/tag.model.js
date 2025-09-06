@@ -16,6 +16,7 @@ export const tagModel = sequelize.define(
             unique:true
         },
     });
+    
 //relacion N:M
 articleModel.belongsToMany(tagModel, 
     {through: articleTag})

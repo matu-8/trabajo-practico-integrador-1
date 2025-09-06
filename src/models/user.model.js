@@ -19,7 +19,7 @@ export const UserModel = sequelize.define(
             unique:true,
             allowNull:false,
         },
-        emil:{
+        email:{
             type:DataTypes.STRING(100),
             unique:true,
             allowNull:false,
@@ -32,14 +32,15 @@ export const UserModel = sequelize.define(
             type:DataTypes.ENUM('user', 'admin'),
             default:'user',
         }
-    }
-)
+    });
+
 //relacion 1:1
 UserModel.hasOne(ProfileModel, {
     foreignKey:"user_id",
-    as:"user"
+    as:"profile"
 });
+
 ProfileModel.belongsTo(UserModel, {
     foreignKey:"user_id",
-    as:"profile"
-    })
+    as:"user"
+})

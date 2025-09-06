@@ -6,9 +6,11 @@ export const articleTag = sequelize.define(
         article_id:{
             type:DataTypes.INTEGER,
             allowNull:false,
+            unique:true
         },
           tag_id:{
             type:DataTypes.INTEGER,
             allowNull:false,
+            unique:true
         }
     });

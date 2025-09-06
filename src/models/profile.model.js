@@ -24,13 +24,12 @@ export const ProfileModel = sequelize.define(
         },
         biography:{
             type:DataTypes.TEXT
+
         },
         avatar_url:{
             type:DataTypes.STRING(255),
         },
         birth_date:{
-            type:DataTypes.DATE
+            type:DataTypes.DATEONLY
         },
     })
-
-    
