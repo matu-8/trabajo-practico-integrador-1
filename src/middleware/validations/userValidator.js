@@ -107,4 +107,10 @@ export const deleteUserValidation = [
     .withMessage("El id debe ser solo numeros")
     .isInt()
     .withMessage("El id debe ser un numero entero")
+    .custom(async(value)=>{
+        const user = await UserModel.findByPk('id')
+        if(user.length == 0){
+            throw new({msg:'No se econtro el usuario'})
+        }
+    })
 ]

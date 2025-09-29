@@ -12,8 +12,10 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 
+
 export const ProfileModel = sequelize.define(
     'profile',{
+        
         first_name:{
             type:DataTypes.STRING(50),
             allowNull:false

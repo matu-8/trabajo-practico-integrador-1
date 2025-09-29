@@ -6,7 +6,7 @@
 
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
-import { articleModel } from "./article.model.js";
+import { ArticleModel } from "./article.model.js";
 import { articleTag } from "./articleTag.model.js";
 
 export const tagModel = sequelize.define(
@@ -17,8 +17,9 @@ export const tagModel = sequelize.define(
         },
     });
     
-//relacion N:M
-articleModel.belongsToMany(tagModel, 
+
+    //relacion N:M
+ArticleModel.belongsToMany(tagModel, 
     {through: articleTag})
-tagModel.belongsToMany(articleModel,
+tagModel.belongsToMany(ArticleModel,
     {through: articleTag})

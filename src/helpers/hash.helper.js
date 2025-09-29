@@ -10,7 +10,7 @@ export const passwordhash = async(password) => {
 
 //verificación de contraseña
 
-export const passwordCompare = async(password, passwordHashed)=>{
+export const passwordCompare = async(password, passwordHashed) => {
     return await bcrypt.compare(password, passwordHashed);
 }
 

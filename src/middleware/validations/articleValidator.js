@@ -1,10 +1,10 @@
-//En estos middelewares se realizan Se realizan las validaciones para todos los campos
-// de los modelos, dichos middlewares se colocan luego de vereficar si estan autenticados 
+//En estos middelewares se realizan las validaciones para todos los campos
+// de los modelos, dichos middlewares se colocan luego de verificar si estan autenticados 
 
 import { articleModel } from "../../models/article.model.js";
 import { body, param } from "express-validator";
 
-export const createArticle = [
+export const createArticleValidation = [
     param("id").trim()
     .isInt().withMessage("El identificador debe ser un numero entero"),
 
@@ -27,17 +27,43 @@ export const createArticle = [
     .isIn(["published","archived"]).withMessage("El estado tiene solo dos opciones disponibles")
 ]
 
-export const getArticleById = [
+export const getArticleByIdValidation = [
     param("id")
-    .isInt({min:1})
-    .withMessage("El identificador debe ser un numero entero")
-    .custom(async(value)=>{
-        const article = await articleModel.findByPk(value)
-        if(!article){
+        .isInt({min:1})
+        .withMessage("El identificador debe ser un numero entero")
+        .custom(async(value)=>{
+            const article = await articleModel.findByPk(value)
+            if(!article){
             throw new Error("No se encontró el article")
         }
         return true;
     })
+
+]
+
+export const updateArticleValidator = [
+    param('id')
+        .notEmpty().withMessage('Falta agregar agregar el numero de id')
+        .isInt({min:1}).withMessage('El identificador debe ser un numero mayor que cero'),
+    body('title')
+    .optional()
+    .isString().withMessage('El titulo debe contener solo letras y numeros')
+    .isLength({min:3, max:200}).withMessage('El titulo no debe sobrepasar los 200 caracteres y poseer menos de 3 caracteres'),
+    
+    body('content')
+    .optional()
+    .isString().withMessage('El contenido debe tener solo letras y numeros')
+    .isLength({min:50}).withMessage('El contenido debe tener como minimo 50 caracteres'),
+    
+    body('excerpt')
+    .optional()
+    .isString().withMessage('El extracto debe tenersolo letras y numeros')
+    .isLength({max:500}).withMessage('EL extracto no debe sobrepasar los 500 caracteres'),
+
+    body('status')
+    .optional()
+
+    
 ]
 
 

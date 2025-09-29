@@ -2,7 +2,7 @@
 export const authMiddleware = (req, res, next) => {
 try {
 // Obtener token de la cookie
-const token = req.cookies["token"];
+const token = req.cookies["token"];//con notacion de corchetes, es una forma de acceder a los elementos dentro de una peticion
     if (!token) {
     return res.status(401).json({ message: "No autenticado" });
     }
@@ -15,6 +15,7 @@ next();
 
 } catch (error) {
     
-res.status(500).json({ message: "Error interno del servidor" });
+res.status(500).json({ 
+    message: "Error interno del servidor" });
 }
 };

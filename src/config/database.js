@@ -15,7 +15,7 @@ export const connectDB = async()=>{
     try {
   await sequelize.authenticate();
   console.log('>>> Exito en autenticacion');
-  await sequelize.sync({alter:true});
+  await sequelize.sync();
   console.log('>>> exito en sincronizacion');
   
 } catch (error) {

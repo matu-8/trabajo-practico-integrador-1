@@ -2,37 +2,33 @@ import { body, param } from "express-validator";
 import { ProfileModel } from "../../models/profile.model.js";
 
 export const createProfileValidation = [
-    param("id").trim()
-        .notEmpty().withMessage("El campo no puede ser vacio")
-        .isInt({min:1}).withMessage("El identificador debe ser un numero entero"),
-       
        //validando nombre
     body("first_name").trim()
        .notEmpty().withMessage("El campo debe ser completado")
        .isString().withMessage("El campo debe ser completado")
-       .length({min:5, max:50}),
+       .isLength({min:5, max:50}),
 
        //validando apellido
     body("last_name").trim()
        .notEmpty().withMessage("El campo debe ser completado")
        .isString().withMessage("El campo debe ser completado")
-       .length({min:5, max:50}),
+       .isLength({min:5, max:50}),
 
        //validando fecha de cumpleaños
     body("birth_date")
         .optional()
-        .isDate().withMessage("Formato de la fecha debe ser válida (AA-MM-DD)"),
-
+        .isDate().withMessage("Formato de la fecha debe ser válida (YYYY/MM/DD)"),
+    
        //validando url de avatar
     body("avatar_url")
-        .optional
+        .optional()
         .isURL().withMessage("El formato de la url no es válido"),
 
        //validando biografia
     body("biography")
-        .optional
+        .optional()
         .trim()
-        .length({max:500}).withMessage("El maximo es de 500 caracteres") 
+        .isLength({max:500}).withMessage("El maximo es de 500 caracteres") 
 ]
 
 export const getProfileByIdValidation = [
@@ -78,17 +74,19 @@ export const updateProfileValidation = [
         }
     ),
        //validando nombre
-    body("first_name").trim()
-       .optional().withMessage("El campo debe ser completado")
-       .isString().withMessage("El campo debe ser completado")
-       .length({min:5, max:50}),
+    body("first_name")
+        .trim()
+       .optional()
+       .isString()
+       .withMessage("El campo debe ser completado")
+       .isLength({min:5, max:50}),
 
        //validando apellido
     body("last_name")
         .trim()
-       .optional().withMessage("El campo debe ser completado")
-       .isString().withMessage("El campo debe ser completado")
-       .length({min:5, max:50}),
+       .optional()
+       .isString()
+       .isLength({min:5, max:50}),
 
        //validando fecha de cumpleaños
     body("birth_date")
@@ -105,6 +103,6 @@ export const updateProfileValidation = [
     body("biography")
         .optional()
         .trim()
-        .length({max:500}).withMessage("El maximo es de 500 caracteres") 
+        .isLength({max:500}).withMessage("El maximo es de 500 caracteres") 
 
 ]
