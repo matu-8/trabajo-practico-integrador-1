@@ -3,7 +3,7 @@ import express from 'express'
 import { connectDB } from './src/config/database.js';
 import cookieParser from 'cookie-parser';
 import cors from "express";
-import { authRoute } from './src/routes/auth.routes.js';
+import { routes } from './src/routes/index.js';
 
 const app = express() 
 const port = process.env.DB_PORT || 3000;
@@ -17,7 +17,7 @@ app.use(cors({
 app.use(express.json())
 
 //enrutamiento
-app.use('/api', authRoute);
+app.use('/api', routes);
 
 //inicio de servidor y conexion a base de datos
 connectDB()

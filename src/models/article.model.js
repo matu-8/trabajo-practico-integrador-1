@@ -30,6 +30,9 @@ export const ArticleModel = sequelize.define(
             type:DataTypes.ENUM('published','archived'),
             defaultValue:'published'
         }
+    },
+    {
+        timestamps:true
     });
     
 //relacion 1:M
