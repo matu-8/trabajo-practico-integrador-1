@@ -1,10 +1,11 @@
 import { validationResult } from "express-validator";
 
-  export const Results = (req, res, next)=> {
+  export const results = (req, res, next)=> {
       const result = validationResult(req);
         if (!result.isEmpty()) {
-          return res.status(400).json({ errors: result.array()});
+          return res.status(400).json({ errors: result.mapped()});
         }
+        console.log(`paso las validaciones`)
         next();
   }
 

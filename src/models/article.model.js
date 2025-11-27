@@ -29,6 +29,10 @@ export const ArticleModel = sequelize.define(
         status:{
             type:DataTypes.ENUM('published','archived'),
             defaultValue:'published'
+        },
+        user_id:{
+            type:DataTypes.INTEGER,
+            allowNull:false,
         }
     },
     {

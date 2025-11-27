@@ -36,7 +36,7 @@ export const UserModel = sequelize.define(
   },
   //agrego como segundo parametro estas opciones
   {
-    deletedAt: false,
+    timestamps:true,
     paranoid: true,
   }
 );

@@ -5,14 +5,14 @@ export const createProfileValidation = [
        //validando nombre
     body("first_name").trim()
        .notEmpty().withMessage("El campo debe ser completado")
-       .isString().withMessage("El campo debe ser completado")
-       .isLength({min:5, max:50}),
+       .isString().withMessage("Solo se aceptan letras")
+       .isLength({min:3, max:50}).withMessage("El primer nombre debe tener como minimo 3 caracteres"),
 
        //validando apellido
     body("last_name").trim()
        .notEmpty().withMessage("El campo debe ser completado")
        .isString().withMessage("El campo debe ser completado")
-       .isLength({min:5, max:50}),
+       .isLength({min:3, max:50}).withMessage("El apellido debe tener como minimo 3 caracteres"),
 
        //validando fecha de cumpleaños
     body("birth_date")
@@ -28,6 +28,7 @@ export const createProfileValidation = [
     body("biography")
         .optional()
         .trim()
+        .isString()
         .isLength({max:500}).withMessage("El maximo es de 500 caracteres") 
 ]
 
@@ -79,14 +80,14 @@ export const updateProfileValidation = [
        .optional()
        .isString()
        .withMessage("El campo debe ser completado")
-       .isLength({min:5, max:50}),
+       .isLength({min:3, max:50}),
 
        //validando apellido
     body("last_name")
         .trim()
        .optional()
        .isString()
-       .isLength({min:5, max:50}),
+       .isLength({min:3, max:50}),
 
        //validando fecha de cumpleaños
     body("birth_date")

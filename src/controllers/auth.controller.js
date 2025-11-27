@@ -2,9 +2,9 @@ import { ProfileModel } from "../models/profile.model.js";
 import { UserModel } from "../models/user.model.js";
 import { passwordCompare, passwordhash } from "../helpers/hash.helper.js";
 import { generateToken } from "../helpers/jwt.helper.js";
-import { cookie } from "express-validator";
 
 export const register = async (req, res) => {
+  console.log("toy aca")
   try {
     const { username, email, password, role } = req.body; //desestructuro los elementos de usuario del cuerpo de la peticion
 
@@ -18,10 +18,9 @@ export const register = async (req, res) => {
       password: hashedpassword,
       role,
     });
+    console.log(`llego el ${user}`)
     // ahora creo el perfil seguido del usuario.
-    const { first_name, last_name, biography, avatar_url, birth_date } =
-      req.body;
-
+    const { first_name, last_name, biography, avatar_url, birth_date } = req.body;
     const profile = await ProfileModel.create({
       first_name,
       last_name,
@@ -30,7 +29,8 @@ export const register = async (req, res) => {
       birth_date,
       user_id: user.id,
     });
-    console.log(profile);
+
+    console.log(`llego el ${profile}`);
 
     return res.status(201).json({
       ok: true,
@@ -52,7 +52,7 @@ export const login = async (req, res) => {
     // include: ProfileModel, //Esto es para que, si encuentra el usuario, traiga tambien el perfil asociado
     // attributes:['first_name', 'last_name'],
     // as:"perfil"
-
+    console.log(`me fijo credenciales y paso`)
     if (!user) {
       return res.status(400).json({ msg: "Credenciales invalidas" });
     }
@@ -83,6 +83,7 @@ export const login = async (req, res) => {
       ok: true,
       msg: "Se ha iniciado sesion",
     });
+    
   } catch (err) {
     res.status(500).json({ msg: "Error interno de servidor" });
     return console.log(`>>> ! error en login ${err}`);

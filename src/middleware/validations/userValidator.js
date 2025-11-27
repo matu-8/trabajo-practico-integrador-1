@@ -4,36 +4,40 @@ import { Op } from "sequelize";
 
 //Creacion de usuario
 export const createUserValidation = [
-    body("username").trim()
+    body("username")
         .notEmpty()
         .withMessage("El campo debe estar completo")
         .isString()
         .withMessage("El nombre de usuario debe contener solo letras y numeros")
-        // .isLength({min:3, max:20})
-        // .withMessage("El nombre de usuario no debe tener menos de 3 y mas de 20 caracteres")
+        .trim()
+        .isLength({min:3, max:20})
+        .withMessage("El nombre de usuario no debe tener menos de 3 y mas de 20 caracteres")
         .custom(async value =>{
             const uniqueUsername = await UserModel.findOne({
                 where:{username:value}
             });
-            if(uniqueUsername){
-                throw new Error(`Este nombre de usuario ya está en uso ${uniqueUsername}`)
+            if(!uniqueUsername){
+                return true;
             }
-            return true;
+            throw new Error(`Este nombre de usuario ya está en uso`)
         }),
  
-    body("email").trim()
+    body("email")
         .notEmpty()
         .withMessage("El campo debe ser completado")
+        .trim()
         .isEmail()
         .withMessage("El formato del email no es valido")
         .custom(async (value) => {
         const email = await UserModel.findOne({
             where:{email:value}
         })
-        if(email){
-            throw new Error("El email ingresado ya existe")
+        if(!email){
+            return true;
         }
+        throw new Error("El email ingresado ya existe")
     }),
+
     body("password").trim()
         .notEmpty()
         .withMessage("El capo no puede ser vacio")
@@ -43,7 +47,6 @@ export const createUserValidation = [
     body("role").trim()
         .notEmpty().withMessage("Debe completar este campo")
         .isIn(["user","admin"]).withMessage("El rol tiene solo dos opciones disponibles")
-    
 ]
 
 //Usuario por ID
@@ -56,6 +59,7 @@ export const getUserById = [
         if(!user){
             throw new Error("No se encontró el usuario")
         }
+        return true;
     })
 ]
 
@@ -90,7 +94,8 @@ export const updateUserValidation = [
     });
     if(searchEmail == req.body.email){
         throw new Error("El email ingresado ya existe")
-}
+        }
+        return true;
    }),
    
     body("password").optional()
@@ -112,5 +117,6 @@ export const deleteUserValidation = [
         if(user.length == 0){
             throw new({msg:'No se econtro el usuario'})
         }
+        return true;
     })
 ]

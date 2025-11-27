@@ -1,4 +1,3 @@
-import { where } from "sequelize";
 import { ProfileModel } from "../models/profile.model.js";
 import { UserModel } from "../models/user.model.js";
 
@@ -17,7 +16,7 @@ export const getAllUsers = async (req, res) => {
     }
     return res.status(200).json({
       ok: true,
-      msg: "Se han encntrado estos usuarios",
+      msg: "Se han encontrado estos usuarios",
       data: user,
     });
   } catch (error) {
@@ -93,26 +92,11 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { deletedAt } = req.body;
-    const user = await UserModel.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        ok: true,
-        msg: "No se ha encontrado el usuario",
-      });
-    }
-    const islogicalyDelete = await UserModel.update(
-      {
-        deletedAt,
-      },
-      {
-        where: { id: id },
-      }
-    );
-    return res.status(200).json({
-      ok: true,
-      msg: `Se ha eliminado el usuario correctamente ${islogicalyDelete}`,
-    });
+    const userDeleted = await UserModel.destroy({where: {id: id}})
+
+    if(!userDeleted)
+      res.status(404).json({ok: false, msg:"No se ha encontrado el usuario"})
+    res.status(200).json({ok: true, msg: "Usuario eliminado"})
   } catch (error) {
     console.log(`>>> ! ha ocurrido un error en eliminar usuario ${error}`);
     return res.status(500).json({

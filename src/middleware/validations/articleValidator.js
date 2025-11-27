@@ -5,24 +5,20 @@ import { ArticleModel } from "../../models/article.model.js";
 import { body, param } from "express-validator";
 
 export const createArticleValidation = [
-  param("id")
-    .trim()
-    .isInt()
-    .withMessage("El identificador debe ser un numero entero"),
-
+  
   body("title")
     .trim()
     .notEmpty()
     .withMessage("El campo no puede ser vacio")
     .isString()
     .withMessage("El titulo debe contener caracteres y numeros")
-    .length({ min: 3, max: 300 }),
+    .isLength({ min: 3, max: 300 }),
 
   body("content")
     .trim()
     .notEmpty()
     .withMessage("El campo debe ser completado")
-    .length({ min: 50 })
+    .isLength({ min: 50 })
     .withMessage("El campo no debe tener menos de 50 caracteres"),
 
   body("excerpt")
@@ -30,7 +26,7 @@ export const createArticleValidation = [
     .isString()
     .withMessage("El extracto solo puede contener letras y numeros")
     .optional()
-    .length({ max: 500 })
+    .isLength({ max: 500 })
     .withMessage("El maximo de caracteres permitidos es de 500"),
 
   body("status")
@@ -83,5 +79,5 @@ export const updateArticleValidator = [
     .isLength({ max: 500 })
     .withMessage("EL extracto no debe sobrepasar los 500 caracteres"),
 
-  body("status").optional(),
+  body("status").optional()
 ];
