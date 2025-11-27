@@ -4,8 +4,8 @@ import { authMiddleware } from "../middleware/authMiddleware.js";
 import { createArticle, getArticleById, getArticlesByUser, getArticlesByUserId, updateArticles } from "../controllers/article.controller.js";
 import { results } from "../middleware/validator.js";
 import { getAllArticles } from "../controllers/article.controller.js";
-import { ownerMiddleware } from "../middleware/ownerMiddleware.js";
-
+// import { ownerMiddleware } from "../middleware/ownerMiddleware.js";
+import { adminOrOwnerMiddlware } from "../middleware/adminOrOwnerMiddleware.js";
 
 export const ArticleRouter = Router()
 
@@ -16,5 +16,5 @@ ArticleRouter.get('/article/user', getArticlesByUser)
 ArticleRouter.get('/article/:id', getArticleById)
 ArticleRouter.get('/article/user/:id', getArticlesByUserId )
 ArticleRouter.post('/article', createArticleValidation, results, createArticle);
-ArticleRouter.put('/article/:id', ownerMiddleware, updateArticleValidator, results, updateArticles)
+ArticleRouter.put('/article/:id', adminOrOwnerMiddlware, updateArticleValidator, results, updateArticles)
 // ArticleRouter.delete('/article',)

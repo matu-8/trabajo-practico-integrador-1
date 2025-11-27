@@ -1,4 +1,3 @@
-import { where } from "sequelize";
 import { ArticleModel } from "../models/article.model.js";
 
 export const createArticle = async (req, res) => {
@@ -68,7 +67,7 @@ export const getArticlesByUser = async (req, res) => {
     res.status(500).json({ ok: false, msg: "Error interno del servidor" });
   }
 };
-
+//traer artciulos por id de usuario
 export const getArticlesByUserId = async (req, res) => {
   const { id } = req.user;
   try {
