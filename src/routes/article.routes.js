@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { createArticleValidation, updateArticleValidator } from "../middleware/validations/articleValidator.js";
+import { createArticleValidation, deleteArticleValidator, updateArticleValidator } from "../middleware/validations/articleValidator.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
-import { createArticle, getArticleById, getArticlesByUser, getArticlesByUserId, updateArticles } from "../controllers/article.controller.js";
+import { createArticle, deleteArticle, getArticleById, getArticlesByUser, getArticlesByUserId, updateArticles } from "../controllers/article.controller.js";
 import { results } from "../middleware/validator.js";
 import { getAllArticles } from "../controllers/article.controller.js";
-// import { ownerMiddleware } from "../middleware/ownerMiddleware.js";
+import { ownerMiddleware } from "../middleware/ownerMiddleware.js";
 import { adminOrOwnerMiddlware } from "../middleware/adminOrOwnerMiddleware.js";
+import { adminMiddleware } from "../middleware/adminMiddleware.js";
 
 export const ArticleRouter = Router()
 
@@ -17,4 +18,4 @@ ArticleRouter.get('/article/:id', getArticleById)
 ArticleRouter.get('/article/user/:id', getArticlesByUserId )
 ArticleRouter.post('/article', createArticleValidation, results, createArticle);
 ArticleRouter.put('/article/:id', adminOrOwnerMiddlware, updateArticleValidator, results, updateArticles)
-// ArticleRouter.delete('/article',)
+ArticleRouter.delete('/article/:id', adminOrOwnerMiddlware, deleteArticleValidator, results, deleteArticle)

@@ -81,3 +81,8 @@ export const updateArticleValidator = [
 
   body("status").optional()
 ];
+export const deleteArticleValidator = [
+  param("id")
+    .isInt({min:1}).withMessage('El id de articulo debe ser un numero entero')
+];
+
