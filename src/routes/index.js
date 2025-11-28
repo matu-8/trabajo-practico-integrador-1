@@ -4,11 +4,13 @@ import { authRoute } from "./auth.routes.js";
 import { ProfileRouter } from "./profile.routes.js";
 import { ArticleRouter } from "./article.routes.js";
 import { UserRouter } from "./user.routes.js";
+import { TagRouter } from "./tag.routes.js";
 
 export const routes = Router();
 
 routes.use(authRoute);
 routes.use(ProfileRouter);
 routes.use(ArticleRouter);
-routes.use(UserRouter)
+routes.use(UserRouter);
+routes.use(TagRouter);
 
